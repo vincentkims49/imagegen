@@ -16,9 +16,9 @@ app.use('/api/v1/post', postRoutes);
 app.use('/api/v1/imageGen', imageGenRoutes);
 
 app.get('/', async (req, res) => {
-  // res.status(200).json({
-  //   message: 'Hello from ImageGen!',
-  // });
+  res.status(200).json({
+    message: 'Hello from ImageGen!',
+  });
   res.send('Hello There');
 });
 
