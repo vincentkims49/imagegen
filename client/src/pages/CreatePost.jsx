@@ -56,23 +56,28 @@ const CreatePost = () => {
     if (form.prompt && form.photo) {
       setLoading(true);
       try {
-        const response = await fetch('https://imagegen-2a2h.onrender.com/api/v1/post', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ form }),
-        });
+    const response = await fetch("https://imagegen-2a2h.onrender.com/api/v1/post", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            form: t
+        })
+    });
 
-        await response.json();
-        alert('Success');
-      } catch (err) {
-        alert(err);
-      } finally {
-        setLoading(false);
-        navigate('/');
+    if (!response.ok) {
+        throw new Error("Network response was not ok");
+    }
 
-      }
+    const responseData = await response.json();
+    alert("Success");
+} catch (error) {
+    alert("An error occurred: " + error.message);
+} finally {
+    i(false); // Assuming 'i' is a function that takes a boolean parameter
+    e("/");    // Assuming 'e' is a function that navigates to a path
+}
     } else {
       alert('Please generate an image with proper details');
     }
