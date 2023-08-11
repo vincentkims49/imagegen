@@ -28,7 +28,7 @@ const CreatePost = () => {
     if (form.prompt) {
       try {
         setGeneratingImg(true);
-        const response = await fetch('https://imagegen-2a2h.onrender.com/v1/imageGen', {
+        const response = await fetch('https://imagegen-2a2h.onrender.com/api/v1/imagegen', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -46,7 +46,7 @@ const CreatePost = () => {
         setGeneratingImg(false);
       }
     } else {
-      alert('Please provide a proper prompt');
+      alert('Please provide proper prompt');
     }
   };
 
@@ -56,28 +56,22 @@ const CreatePost = () => {
     if (form.prompt && form.photo) {
       setLoading(true);
       try {
-    const response = await fetch("https://imagegen-2a2h.onrender.com/api/v1/post", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            form: t
-        })
-    });
+        const response = await fetch('https://imagegen-2a2h.onrender.com/api/v1/post', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ ...form }),
+        });
 
-    if (!response.ok) {
-        throw new Error("Network response was not ok");
-    }
-
-    const responseData = await response.json();
-    alert("Success");
-} catch (error) {
-    alert("An error occurred: " + error.message);
-} finally {
-    i(false); // Assuming 'i' is a function that takes a boolean parameter
-    e("/");    // Assuming 'e' is a function that navigates to a path
-}
+        await response.json();
+        alert('Success');
+        navigate('/');
+      } catch (err) {
+        alert(err);
+      } finally {
+        setLoading(false);
+      }
     } else {
       alert('Please generate an image with proper details');
     }
@@ -87,7 +81,7 @@ const CreatePost = () => {
     <section className="max-w-7xl mx-auto">
       <div>
         <h1 className="font-extrabold text-[#222328] text-[32px]">Create</h1>
-        <p className="mt-2 text-[#666e75] text-[14px] max-w-[500px]">Generate an imaginative image through ImageGen AI and share it with the community</p>
+        <p className="mt-2 text-[#666e75] text-[14px] max-w-[500px]">Generate an imaginative image through DALL-E AI and share it with the community</p>
       </div>
 
       <form className="mt-16 max-w-3xl" onSubmit={handleSubmit}>
